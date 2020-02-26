@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <title>Home</title>
+</head>
+
+<body>
+    <div class="whole-page" id="myVue">
+        <div class="row">
+            <div class="logo-holder">
+                <img class="logo" src="images/hotel-clipart-hotel.png" alt="">
+            </div>
+        </div>
+        <div class="row">
+            <div class="divider"></div>
+        </div>
+        <div class="row" v-if="!presentMode">
+            <div class="cell">
+                <div class="search-holder">
+                    <div class="search-row">
+                        <label for="">Destination:</label>
+                        <input class="serch-box-input" type="text" v-model="destination">
+                    </div>
+                    <div class="search-row">
+                        <label for="">Check in:</label>
+                        <input class="serch-box-input" type="date">
+                    </div>
+                    <div class="search-row">
+                        <label for="">Check out:</label>
+                        <input class="serch-box-input" type="date">
+                    </div>
+                    <div class="search-row">
+                        <label for="">Adults:</label>
+                        <input class="serch-box-input" type="text" v-model="adults">
+                    </div>
+                    <div class="search-row">
+                       <button v-on:click="search" class="search-button">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" v-if="presentMode">
+            <div class="cell">
+                <div class="search-holder">
+                    <div class="result-row">
+                        <img src="" alt="">
+                    </div>
+                    <div class="result-row">
+                        <label for="hotel-name">{{allHotelsInfo[0].name}}</label>
+                    </div>
+                    <div class="result-row">
+                        <div class="price-holser">
+                            € Per night
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="footer-first-row">
+                <div class="footer-cell">
+                    <img src="images/iconfinder_Search_613531.png" alt="">
+                </div>
+                <div class="footer-cell">
+                    <img src="images/facebook-heart-icon-png-4.png" alt="">
+                </div>
+                <div class="footer-cell">
+                    <img src="images/cloud_text-512.png" alt="">
+                </div>
+            </div>
+            <div class="footer-first-row">
+                <div class="footer-cell">
+                    <a href="home.html">
+                        <p>Search</p>
+                    </a>
+                </div>
+                <div class="footer-cell">
+                    <a href="">
+                        <p>Favourite</p>
+                    </a>
+                </div>
+                <div class="footer-cell">
+                    <a href="">
+                        <p>Chat</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+
+</html>
