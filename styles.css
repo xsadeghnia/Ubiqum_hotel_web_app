@@ -4,6 +4,7 @@
     flex-wrap: wrap;
     font-family:sans-serif;
     color:#003d71;
+   
 }
 .row{
     display: flex;
@@ -15,74 +16,97 @@
     justify-content: center;
 }
 .logo{
-    width: 25%;
+    width: 20%;
 }
 .divider{
     width: 100%;
     height:1px;
     background-color: #003d71;
-    margin-bottom: 10%;
+    margin-bottom: 7%;
 }
 .cell{
     display: flex;
     width: 100%;
     justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 7%;
 }
 .search-holder{
     width: 80%;
     border: 1px solid #003d71;
     border-radius: 5px;
-    font-size: 4vw;
+    font-size: 3.5vw;
+    margin-bottom: 4%;
 }
 .search-row{
     display: flex;
     width: 100%;
     justify-content: center;
     margin-top: 10%;
-    margin-bottom: 10%;
 }
 .search-row label{
-    margin-left: 5px;
+    width: 22%;
 }
 .serch-box-input {
    margin-left: 5%;
    width: 50%;
    border: 1px solid #003d71;
-   border-radius: 2px;
+   border-radius: 3px;
    color:#003d71;
+   font-size: 3.3vw;
 }
 .search-button{
-    width: 40%;
-    border-radius: 5px;
-    color:white;
-    background-color:#003d71;
     justify-content: center;
-    font-size: 4vw;
-    margin: 20%;
+    font-size: 3.5vw;
+    margin: 10%;
+    flex: 0.4 0.4 auto;
+    padding: 3%;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    /* text-shadow: 0px 0px 10px rgba(0,0,0,0.2);*/
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    background-image: linear-gradient(to right, #003d71 0%, #c2e9fb 51%, #003d71 100%);
 }
+.search-button:hover {
+    background-position: right center; /* change the direction of the change here */
+  }
 .search-button a{
     color: white;
     text-decoration: none;
 }
 .footer{
-    position: fixed;
     display: flex;
     flex-wrap: wrap;
-    left: 0;
-    bottom: 0;
     width: 100%;
+    height:10%; 
+    background-image: none;
+    background-repeat: repeat;
+    background-attachment: scroll;
+    background-position: 0% 0%;
     border-top: 1px solid #003d71;
+    background-color: white;
+    position: fixed;
+    bottom: 0pt;
+    left: 0pt;
     font-size: 3.5vw;
-    color:#003d71 ;
 }
-.footer-first-row{
+.footer-row{
     display: flex;
     width: 100%;
+    justify-content: center;
+    height:40%; 
+   
+    margin:auto;
 }
 .footer-cell{
     display: flex;
-    width: 33%;
     justify-content: center;
+    width: 33%;
+   
 }
 .footer-cell a{
     text-decoration: none;
@@ -104,9 +128,65 @@
     width: 100%;
     justify-content: center;
 }
+.result-row img{
+    width: 90%;
+    border-radius:2%;
+    margin-top: 3%;
+}
+.result-row p{
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
 .price-holser{
-    width: 97%;
+    display: flex;
+    width: 90%;
     border: 1px solid #003d71;
     border-radius: 5px;
     margin-bottom: 3%;
+}
+.price{
+    display: flex;
+    width: 40%;
+    margin-left: 5%;
+}
+.rating{
+    display: flex;
+    width: 30%;
+}
+.more-info{
+    display: flex;
+    width: 30%;
+    text-decoration: underline;
+}
+.info-single-element{
+    display: flex;
+    width: 100%;
+}
+.info-element{
+    display: flex;
+    width: 50%;
+}
+.info-holder{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.info-single-element{ 
+    width: 100%;
+    display: flex;
+   
+}
+.info-img-slider{
+    width: 100%;
+    height: 133px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    overflow-x: scroll;
+}
+.hotel-carrusel-item{
+    width: 50%;
+    height: 133px;
+    margin-left: 5%;
 }

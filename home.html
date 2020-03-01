@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/vueperslides"></script>
+    <link href="https://unpkg.com/vueperslides/dist/vueperslides.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <title>Home</title>
 </head>
@@ -20,7 +23,7 @@
         <div class="row">
             <div class="divider"></div>
         </div>
-        <div class="row" v-if="!presentMode">
+        <div class="row" v-if="!searchMode">
             <div class="cell">
                 <div class="search-holder">
                     <div class="search-row">
@@ -45,25 +48,58 @@
                 </div>
             </div>
         </div>
-        <div class="row" v-if="presentMode">
+        <div class="row" v-if="searchMode && !moreInfoMode">
             <div class="cell">
-                <div class="search-holder">
+                <div class="search-holder" v-for="hotel in allHotelsInfo">
                     <div class="result-row">
-                        <img src="" alt="">
+                        <img v-bind:src="hotel.pic" alt="hotel">
                     </div>
                     <div class="result-row">
-                        <label for="hotel-name">{{allHotelsInfo[0].name}}</label>
+                        <label for="hotel-name"><p>{{hotel.name}}</p></label>
                     </div>
                     <div class="result-row">
                         <div class="price-holser">
-                            € Per night
+                            <div class="price"><p>{{hotel.price}}  Per night</p></div>
+                            <div class="rating"><p>Rating: {{hotel.rating}}</p></div>
+                            <div class="more-info"  v-on:click="() => showMoreInfo(hotel)">more info</div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="info-holder" v-if="moreInfoMode">
+            <div class="row">
+                <div class="info-img-slider">
+                    <img class="hotel-carrusel-item" v-for="img in hotelImages" :src="img" >
+                </div>
+            </div>
+            <div class="row">
+                <div class="info-single-element">
+                    <p>{{selectedHotel.name}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="info-element">
+                    <p>Rating: {{selectedHotel.rating}}</p>
+                </div>
+                <div class="info-element">
+                    <p>Price: {{selectedHotel.price}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="info-single-element">
+                    <div>Contact</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="info-single-element">
+                    <div>Address: {{selectedHotel.address}} </div>
+                </div>
+            </div>
+        </div>
         <div class="footer">
-            <div class="footer-first-row">
+            <div class="footer-row">
                 <div class="footer-cell">
                     <img src="images/iconfinder_Search_613531.png" alt="">
                 </div>
@@ -74,7 +110,7 @@
                     <img src="images/cloud_text-512.png" alt="">
                 </div>
             </div>
-            <div class="footer-first-row">
+            <div class="footer-row">
                 <div class="footer-cell">
                     <a href="home.html">
                         <p>Search</p>
