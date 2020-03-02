@@ -23,8 +23,8 @@
         <div class="row">
             <div class="divider"></div>
         </div>
-        <div class="row" v-if="!searchMode">
-            <div class="cell">
+        <div class="row" v-if="!searchMode && !favouritesMode">
+            <div class="cell-home">
                 <div class="search-holder">
                     <div class="search-row">
                         <label for="">Destination:</label>
@@ -43,7 +43,7 @@
                         <input class="serch-box-input" type="text" v-model="adults">
                     </div>
                     <div class="search-row">
-                       <button v-on:click="search" class="search-button">Search</button>
+                        <button v-on:click="search" class="search-button">Search</button>
                     </div>
                 </div>
             </div>
@@ -55,13 +55,19 @@
                         <img v-bind:src="hotel.pic" alt="hotel">
                     </div>
                     <div class="result-row">
-                        <label for="hotel-name"><p>{{hotel.name}}</p></label>
+                        <label for="hotel-name">
+                            <p>{{hotel.name}}</p>
+                        </label>
                     </div>
                     <div class="result-row">
                         <div class="price-holser">
-                            <div class="price"><p>{{hotel.price}}  Per night</p></div>
-                            <div class="rating"><p>Rating: {{hotel.rating}}</p></div>
-                            <div class="more-info"  v-on:click="() => showMoreInfo(hotel)">more info</div>
+                            <div class="price">
+                                <p>{{hotel.price}} Per night</p>
+                            </div>
+                            <div class="rating">
+                                <p>Rating: {{hotel.rating}}</p>
+                            </div>
+                            <div class="more-info" v-on:click="() => showMoreInfo(hotel)">more info</div>
 
                         </div>
                     </div>
@@ -69,62 +75,113 @@
             </div>
         </div>
         <div class="info-holder" v-if="moreInfoMode">
+            <button class="back-icon" v-on:click="() => goBack()">
+                <img src="images/arrow_left2-512.png" alt="">
+            </button>
             <div class="row">
                 <div class="info-img-slider">
-                    <img class="hotel-carrusel-item" v-for="img in hotelImages" :src="img" >
+                    <img class="hotel-carrusel-item" v-for="img in hotelImages" :src="img">
+                </div>
+            </div>
+            <div class="first-info-box">
+                <div class="row">
+                    <div class="info-single-element">
+                        {{selectedHotel.name}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="info-element">
+                        Rating: {{selectedHotel.rating}}
+                    </div>
+                    <div class="info-element">
+                        Price: {{selectedHotel.price}}
+                    </div>
+                    <div class="info-element">
+                        <button v-on:click="() => selectFavourites(selectedHotel)"><img src="images/facebook-heart-icon-png-4.png" alt=""></button>
+                    </div>
                 </div>
             </div>
             <div class="row">
-                <div class="info-single-element">
-                    <p>{{selectedHotel.name}}</p>
+                <p class="p-facilities">Facilities:</p>
+            </div>
+            <div class="facilities-info-box">
+                <div class="row">
+                    <table facility-tbl>
+                        <tr v-for="facility in facilities">
+                            <td>{{facility}}</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
             <div class="row">
-                <div class="info-element">
-                    <p>Rating: {{selectedHotel.rating}}</p>
-                </div>
-                <div class="info-element">
-                    <p>Price: {{selectedHotel.price}}</p>
+                <div class="contact-single-element">
+                    <p class="contact">Contact:</p>
                 </div>
             </div>
             <div class="row">
-                <div class="info-single-element">
-                    <div>Contact</div>
+                <div class="contact-single-element">
+                    <p class="address">Address: {{selectedHotel.address}} </p>
                 </div>
             </div>
-            <div class="row">
-                <div class="info-single-element">
-                    <div>Address: {{selectedHotel.address}} </div>
+        </div>
+        <div class="row" v-if="!moreInfoMode && favouritesMode">
+            <div class="cell">
+                <div class="row">
+                    <button class="favBack-icon" v-on:click="() => favBack()">
+                        <img src="images/arrow_left2-512.png" alt="">
+                    </button>
+                </div>
+                <div class="search-holder" v-for="hotel in favArr">
+                    <div class="result-row">
+                        <img v-bind:src="hotel.pic" alt="hotel">
+                    </div>
+                    <div class="result-row">
+                        <label for="hotel-name">
+                            <p>{{hotel.name}}</p>
+                        </label>
+                    </div>
+                    <div class="result-row">
+                        <div class="price-holser">
+                            <div class="price">
+                                <p>{{hotel.price}} Per night</p>
+                            </div>
+                            <div class="rating">
+                                <p>Rating: {{hotel.rating}}</p>
+                            </div>
+                            <div class="more-info" v-on:click="() => showMoreInfo(hotel)">more info</div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="footer">
             <div class="footer-row">
                 <div class="footer-cell">
-                    <img src="images/iconfinder_Search_613531.png" alt="">
+                    <img src="images/home-icon-blue-vector-19951475.jpg" alt="search">
                 </div>
                 <div class="footer-cell">
-                    <img src="images/facebook-heart-icon-png-4.png" alt="">
+                    <img src="images/affectionate-heart-icon-blue-vector-20822550.jpg" alt="favourite">
                 </div>
                 <div class="footer-cell">
-                    <img src="images/cloud_text-512.png" alt="">
+                    <img src="images/chat-icon-blue-vector-19951665.jpg" alt="chat">
                 </div>
             </div>
             <div class="footer-row">
                 <div class="footer-cell">
-                    <a href="home.html">
-                        <p>Search</p>
-                    </a>
+                    <div v-on:click="goHome">
+                        <p>Home</p>
+                    </div >
                 </div>
                 <div class="footer-cell">
-                    <a href="">
+                    <div v-on:click="showFavourites">
                         <p>Favourite</p>
-                    </a>
+                    </div>
                 </div>
                 <div class="footer-cell">
-                    <a href="">
+                    <div>
                         <p>Chat</p>
-                    </a>
+                    </div>
                 </div>
             </div>
         </div>

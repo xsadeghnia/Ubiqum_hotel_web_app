@@ -8,17 +8,11 @@ const app = new Vue({
         allHotelsInfo: [],
         searchMode: false,
         moreInfoMode: false,
+        favouritesMode : false,
         selectedHotel: null,
         hotelImages: [],
-        slides: [
-            // {
-            //   title: 'El Teide Volcano, Spain',
-            //   content: 'Photo by Max Rive',
-            //   // You can also provide a URL for the image.
-            //   image:('@/assets/images/el-teide-volcano-spain.jpg')
-            // },
-            // Other slides.
-          ]
+        facilities: [],
+        favArr: [],
     },
     methods: {
         search: async function () {
@@ -34,26 +28,36 @@ const app = new Vue({
                 .then(e => e) // .then(function(e) { return e; })
                 .catch(err => err);
             console.log('data has been fetched')
-            let newListOfHotles = []
+            let newListOfHotles = [];
             for (let i = 0; i < this.destinationInfo.suggestions[0].entities.length; i++) {
-                let area = await fetch('https://hotels4.p.rapidapi.com/properties/list?destinationId=' + this.destinationInfo.suggestions[0].entities[i].destinationId + '&type=CITY&pageNumber=1&pageSize=1&adults1=' + this.adults, options)
+                var rowHotelInfo = await fetch('https://hotels4.p.rapidapi.com/properties/list?destinationId=' + this.destinationInfo.suggestions[0].entities[i].destinationId + '&type=CITY&pageNumber=1&pageSize=1&adults1=' + this.adults, options)
                     .then(res => res.json())
-                    .then(e => e.data.body.searchResults.results) // .then(function(e) { return e; })
+                    .then(e => e) // .then(function(e) { return e; })
                     .catch(err => err);
-                for (let j = 0; j < area.length; j++) {
+                var results = rowHotelInfo.data.body.searchResults.results;
+                for (let j = 0; j < results.length; j++) {
                     let hotelsObjectToShow = {};
-                    hotelsObjectToShow.name = area[j].name;
-                    hotelsObjectToShow.id = area[j].id;
-                    hotelsObjectToShow.pic = area[j].thumbnailUrl;
-                    hotelsObjectToShow.rating = area[j].starRating;
-                    hotelsObjectToShow.address = area[j].address.streetAddress;
-                    if (area[j].ratePlan)
-                        hotelsObjectToShow.price = area[j].ratePlan.price.current;
+                    hotelsObjectToShow.name = results[j].name;
+                    hotelsObjectToShow.id = results[j].id;
+                    hotelsObjectToShow.pic = results[j].thumbnailUrl;
+                    hotelsObjectToShow.rating = results[j].starRating;
+                    hotelsObjectToShow.address = results[j].address.streetAddress;
+                    if (results[j].ratePlan)
+                        hotelsObjectToShow.price = results[j].ratePlan.price.current;
                     newListOfHotles.push(hotelsObjectToShow);
                 }
             }
             this.allHotelsInfo = newListOfHotles;
             console.log(this.allHotelsInfo);
+            let newFacilities = [];
+            let facil = rowHotelInfo.data.body.filters.facilities.items;
+            if (facil[9].label)
+                newFacilities.push(facil[9].label);
+            if (facil[10].label)
+                newFacilities.push(facil[10].label);
+            if (facil[11].label)
+                newFacilities.push(facil[11].label);
+            this.facilities = newFacilities;
             this.searchMode = true;
         },
         showMoreInfo: async function (hotel) {
@@ -68,13 +72,36 @@ const app = new Vue({
                 .then(res => res.json())
                 .then(e => e) // .then(function(e) { return e; })
                 .catch(err => err);
-                
+
             for (let i = 0; i < 6; i++) {
-                console.log(images.hotelImages[i].baseUrl.replace('_{size}', ''))
                 this.hotelImages.push(images.hotelImages[i].baseUrl.replace('_{size}', ''));
             }
-            console.log(this.hotelImages)
             this.moreInfoMode = true;
+        },
+        selectFavourites: async function (hotel) {
+            let i = this.favArr.indexOf(hotel);
+            if(i != -1){
+                this.favArr.splice(i,1);
+                return;
+            }
+            this.favArr.push(hotel);
+        },
+        showFavourites : async function(){
+            this.moreInfoMode =false;
+            this.searchMode =false;
+            this.favouritesMode = true;
+        },
+        goBack: async function () {
+            this.moreInfoMode = false;
+        },
+        favBack: async function(){
+            this.favouritesMode = false;
+            this.searchMode = true;
+        },
+        goHome : async function(){
+            this.searchMode = false;
+            this.moreInfoMode = false;
+            this.favouritesMode = false;
         }
     },
 });
