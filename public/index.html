@@ -9,6 +9,7 @@
     <script src="https://unpkg.com/vue"></script>
     <script src="https://unpkg.com/vueperslides"></script>
     <link href="https://unpkg.com/vueperslides/dist/vueperslides.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
     <link rel="stylesheet" href="styles.css">
     <title>Home</title>
 </head>
@@ -23,7 +24,7 @@
         <div class="row">
             <div class="divider"></div>
         </div>
-        <div class="row" v-if="!searchMode && !favouritesMode">
+        <div class="row" v-if="!searchMode && !favouritesMode && !chatMode">
             <div class="cell-home">
                 <div class="search-holder">
                     <div class="search-row">
@@ -97,7 +98,8 @@
                         Price: {{selectedHotel.price}}
                     </div>
                     <div class="info-element">
-                        <button v-on:click="() => selectFavourites(selectedHotel)"><img src="images/facebook-heart-icon-png-4.png" alt=""></button>
+                        <button v-on:click="() => markFavourites(selectedHotel)"><img
+                                src="images/facebook-heart-icon-png-4.png" alt=""></button>
                     </div>
                 </div>
             </div>
@@ -155,7 +157,27 @@
                 </div>
             </div>
         </div>
-        <div class="footer">
+        <div class="chat-row" v-if="!searchMode && !moreInfoMode && !favouritesMode && chatMode">
+            <div class="close-holder" v-on:click="closeChat">
+                <img class="close-img" src="images/close.png" alt="">
+            </div>
+            <div class="chat">
+                <div class="advice">
+                 You must to be logged
+                 <button id="login" class="button is-info">Login!</button>      
+               </div>
+               <div id="posts" class="box">
+                 Loading posts...
+               </div>
+           
+               <div class="inputs">
+                 <input id="textInput" class="input" type="text" placeholder="Your message...">
+                 <button id="create-post" class="button is-primary btn-color">Send</button>
+
+               </div>
+             </div>
+        </div>
+        <div class="my-footer">
             <div class="footer-row">
                 <div class="footer-cell">
                     <img src="images/home-icon-blue-vector-19951475.jpg" alt="search">
@@ -171,7 +193,7 @@
                 <div class="footer-cell">
                     <div v-on:click="goHome">
                         <p>Home</p>
-                    </div >
+                    </div>
                 </div>
                 <div class="footer-cell">
                     <div v-on:click="showFavourites">
@@ -179,13 +201,43 @@
                     </div>
                 </div>
                 <div class="footer-cell">
-                    <div>
+                    <div v-on:click="chat"> 
                         <p>Chat</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-database.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyCUNhYJBoYbpR8atNzqn-zsJYbjZWjMYPI",
+            authDomain: "ubiqum-hotel-web-1583223685815.firebaseapp.com",
+            databaseURL: "https://ubiqum-hotel-web-1583223685815.firebaseio.com",
+            projectId: "ubiqum-hotel-web-1583223685815",
+            storageBucket: "ubiqum-hotel-web-1583223685815.appspot.com",
+            messagingSenderId: "1076885958096",
+            appId: "1:1076885958096:web:bf874d1193408051b55dd5",
+            measurementId: "G-XGH3B32EW9"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="main2.js"></script>
     <script src="main.js"></script>
 </body>
 

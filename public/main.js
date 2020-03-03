@@ -9,6 +9,7 @@ const app = new Vue({
         searchMode: false,
         moreInfoMode: false,
         favouritesMode : false,
+        chatMode : false,
         selectedHotel: null,
         hotelImages: [],
         facilities: [],
@@ -78,7 +79,7 @@ const app = new Vue({
             }
             this.moreInfoMode = true;
         },
-        selectFavourites: async function (hotel) {
+        markFavourites: async function (hotel) {
             let i = this.favArr.indexOf(hotel);
             if(i != -1){
                 this.favArr.splice(i,1);
@@ -87,6 +88,7 @@ const app = new Vue({
             this.favArr.push(hotel);
         },
         showFavourites : async function(){
+            console.log("fav is clicked!");
             this.moreInfoMode =false;
             this.searchMode =false;
             this.favouritesMode = true;
@@ -102,6 +104,18 @@ const app = new Vue({
             this.searchMode = false;
             this.moreInfoMode = false;
             this.favouritesMode = false;
+            this.chatMode = false;
+        },
+        chat : async function(){
+            console.log("chat is clicked!");
+            this.searchMode = false;
+            this.moreInfoMode = false;
+            this.favouritesMode = false;
+            this.chatMode = true;
+            getPosts();
+        },
+        closeChat: async function(){
+            this.chatMode = false;
         }
     },
 });
